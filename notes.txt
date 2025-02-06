@@ -1,0 +1,4 @@
+build and run (striver's build file and run) 
+(need to comment out the main's ios/onlinedef function in the file)
+    -> ctrl + shift + b
+    (output / input gets in the -> txt file outside)

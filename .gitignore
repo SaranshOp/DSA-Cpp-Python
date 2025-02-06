@@ -1,3 +1,14 @@
+# folders
+CodeHelp-DSA-Busted-Series/
+
+.vscode
+
+*.exe
+*.out
+*.app
+
+
+
 # Prerequisites
 *.d
 

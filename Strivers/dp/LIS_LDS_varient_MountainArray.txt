@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+
+using namespace std;
+typedef long long ll;
+
+vector<int> LIS(vector<int> nums, bool f)
+{
+    int n = nums.size();
+    vector<int> res;
+    vector<int> dp(n, 1);
+    for (int i = 0; i < n; i++)
+    {
+        int x = nums[i];
+        if (res.empty() || (x > res[res.size() - 1]) && f)
+        {
+            res.push_back(x);
+        }
+        else
+        {
+
+            auto itr = lower_bound(res.begin(), res.end(), x);
+            if (itr != res.end())
+                *itr = x;
+            else
+                res.push_back(x);
+        }
+        dp[i] = res.size();
+    }
+    return dp;
+}
+int minimumMountainRemovals(vector<int> &nums)
+{
+    int n = nums.size();
+    int x, itr, maxi = INT_MIN;
+    vector<int> dp1 = LIS(nums, true);
+    reverse(nums.begin(), nums.end());
+    vector<int> dp2 = LIS(nums, true);
+    reverse(dp2.begin(), dp2.end());
+    // print(dp1);
+    // print(dp2);
+    for (int i = 0; i < n; i++)
+    {
+        cout << dp1[i] << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < n; i++)
+    {
+        cout << dp2[i] << " ";
+    }
+    cout << endl;
+
+    for (int i = 1; i < n - 1; i++)
+    {
+        if (dp1[i] > 1 && dp2[i] > 1)
+        {
+            x = dp1[i] + dp2[i] - 1;
+            maxi = max(maxi, x);
+        }
+    }
+    cout << "maxi: " << maxi << endl;
+    return n - maxi;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+    vector<int> nums = {2, 1, 1, 5, 6, 2, 3, 1};
+    cout << minimumMountainRemovals(nums) << endl;
+
+    return 0;
+}
